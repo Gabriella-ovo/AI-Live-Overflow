@@ -23,6 +23,14 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Move files to correct locations
+        run: |
+          cp .github/workflows/build.gradle.kts ./
+          cp .github/workflows/settings.gradle.kts ./
+          cp .github/workflows/gradle.properties ./
+          cp -r .github/workflows/gradle ./
+          cp -r .github/workflows/app ./
+
       - name: Build debug APK
         run: gradle assembleDebug
 
