@@ -123,7 +123,11 @@ class OverlayService : Service() {
             }
         }
 
-        windowManager?.addView(overlayView, params)
+            try {
+            windowManager?.addView(overlayView, params)
+        } catch (e: Exception) {
+            stopSelf()
+        }
     }
 
     private fun evaluateJavascript(script: String) {
