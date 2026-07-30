@@ -70,9 +70,8 @@ class OverlayService : Service() {
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
         val density = resources.displayMetrics.density
-        val width = (58 * density).toInt()
-        val height = (45 * density).toInt()
-
+        val width = (90 * density).toInt()
+        val height = (120 * density).toInt()
         params = WindowManager.LayoutParams(
             width,
             height,
