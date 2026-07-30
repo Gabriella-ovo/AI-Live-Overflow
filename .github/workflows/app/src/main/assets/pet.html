@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+.container {
+    position: relative;
+    width: 200px;
+    height: 180px;
+}
+svg { width: 100%; height: 100%; display: block; }
+
+/* 尾巴动画 */
+@keyframes tailWag {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+}
+.tail-left { animation: tailWag 3s ease-in-out infinite; transform-origin: right center; }
+.tail-right { animation: tailWag 3s ease-in-out infinite reverse; transform-origin: left center; }
+
+/* 胸鳍动画 */
+@keyframes finLeft {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(0deg); }
+}
+@keyframes finRight {
+    0%, 100% { transform: rotate(5deg); }
+    50% { transform: rotate(0deg); }
+}
+.fin-left { animation: finLeft 2.5s ease-in-out infinite; transform-origin: top center; }
+.fin-right { animation: finRight 2.5s ease-in-out infinite; transform-origin: top center; }
+
+/* 水花动画 */
+@keyframes fountain {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.8); }
+}
+@keyframes splash {
+    0%, 100% { opacity: 0.6; transform: translateY(0) scale(1); }
+    50% { opacity: 1; transform: translateY(-5px) scale(1.2); }
+}
+@keyframes dropLeft {
+    0%, 100% { transform: translate(0,0); opacity: 0; }
+    30% { opacity: 0.8; }
+    70% { opacity: 0.6; transform: translate(-8px,-12px); }
+}
+@keyframes dropRight {
+    0%, 100% { transform: translate(0,0); opacity: 0; }
+    30% { opacity: 0.8; }
+    70% { opacity: 0.6; transform: translate(8px,-12px); }
+}
+.water-column { animation: fountain 1.8s ease-in-out infinite; transform-origin: bottom center; }
+.water-splash { animation: splash 1.8s ease-in-out infinite; }
+.water-drop-l { animation: dropLeft 2s ease-in-out infinite; }
+.water-drop-r { animation: dropRight 2s ease-in-out infinite; }
+
+/* 眨眼 */
+@keyframes blink {
+    0%, 45%, 55%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.05); }
+}
+.blink-group { animation: blink 0.3s ease-in-out; }
+
+/* 表情切换 */
+@keyframes appear {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+.face-group { animation: appear 0.4s ease-out; }
+
+/* 腮红呼吸 */
+@keyframes blushPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+.blush { animation: blushPulse 4s ease-in-out infinite; }
+</style>
+</head>
+<body><div class="container">
+<svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- 身体渐变 -->
+        <radialGradient id="bodyGrad" cx="45%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#7BC4FF"/>
+            <stop offset="60%" stop-color="#5BAAEE"/>
+            <stop offset="100%" stop-color="#4A9BE8"/>
+        </radialGradient>
+        <!-- 肚子渐变 -->
+        <radialGradient id="bellyGrad" cx="50%" cy="45%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#F0F8FF"/>
+        </radialGradient>
+        <!-- 腮红渐变 -->
+        <radialGradient id="blushGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFB3C6" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#FFB3C6" stop-opacity="0"/>
+        </radialGradient>
+        <!-- 眼睛高光渐变 -->
+        <radialGradient id="highlightGrad" cx="35%" cy="35%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+        </radialGradient>
+    </defs>
+
+    <!-- ===== 尾巴（爱心双叶） ===== -->
+    <g class="tail-left">
+        <path d="M 38,95 Q 20,78 15,88 Q 10,98 28,102 Q 35,104 38,95Z"
+              fill="url(#bodyGrad)" stroke="#4A9BE8" stroke-width="0.5"/>
+    </g>
+    <g class="tail-right">
+        <path d="M 162,95 Q 180,78 185,88 Q 190,98 172,102 Q 165,104 162,95Z"
+              fill="url(#bodyGrad)" stroke="#4A9BE8" stroke-width="0.5"/>
+    </g>
+
+    <!-- ===== 身体（圆滚滚团子） ===== -->
+    <ellipse cx="100" cy="100" rx="62" ry="48" fill="url(#bodyGrad)" stroke="#4A9BE8" stroke-width="1"/>
+
+    <!-- ===== 肚子（纯白大肚子） ===== -->
+    <path d="M 68,105 Q 68,80 100,78 Q 132,80 132,105 Q 132,125 100,128 Q 68,125 68,105Z"
+          fill="url(#bellyGrad)" stroke="#D0E8FF" stroke-width="1.5" stroke-opacity="0.4"/>
+
+    <!-- ===== 胸鳍 ===== -->
+    <g class="fin-left">
+        <path d="M 48,108 Q 38,115 42,122 Q 50,118 55,112Z"
+              fill="url(#bodyGrad)" stroke="#4A9BE8" stroke-width="0.5"/>
+    </g>
+    <g class="fin-right">
+        <path d="M 152,108 Q 162,115 158,122 Q 150,118 145,112Z"
+              fill="url(#bodyGrad)" stroke="#4A9BE8" stroke-width="0.5" opacity="0.35"/>
+    </g>
+
+    <!-- ===== 水花喷泉 ===== -->
+    <g>
+        <ellipse class="water-column" cx="100" cy="148" rx="4" ry="8" fill="#87CEEB" opacity="0.5"/>
+        <circle class="water-splash" cx="100" cy="138" r="3" fill="#B0E0FF" opacity="0.6"/>
+        <circle class="water-drop-l" cx="94" cy="135" r="2" fill="#B0E0FF"/>
+        <circle class="water-drop-r" cx="106" cy="135" r="2" fill="#B0E0FF"/>
+    </g>
+
+    <!-- ===== 腮红 ===== -->
+    <g class="blush">
+        <ellipse cx="75" cy="108" rx="10" ry="6" fill="url(#blushGrad)"/>
+        <ellipse cx="125" cy="108" rx="10" ry="6" fill="url(#blushGrad)"/>
+    </g>
+    <!-- ===== 眼睛组 ===== -->
+    <g class="blink-group face-group">
+        <!-- 左眼 -->
+        <ellipse cx="85" cy="90" rx="13" ry="14" fill="white" stroke="#D0E8FF" stroke-width="0.5"/>
+        <ellipse cx="85" cy="90" rx="8" ry="9" fill="#1a1a2e"/>
+        <ellipse cx="85" cy="90" rx="4" ry="4.5" fill="url(#highlightGrad)"/>
+        <circle cx="82" cy="87" r="1.5" fill="white" opacity="0.6"/>
+
+        <!-- 右眼 -->
+        <ellipse cx="115" cy="90" rx="13" ry="14" fill="white" stroke="#D0E8FF" stroke-width="0.5"/>
+        <ellipse cx="115" cy="90" rx="8" ry="9" fill="#1a1a2e"/>
+        <ellipse cx="115" cy="90" rx="4" ry="4.5" fill="url(#highlightGrad)"/>
+        <circle cx="112" cy="87" r="1.5" fill="white" opacity="0.6"/>
+    </g>
+
+    <!-- ===== 嘴巴（微笑弧线） ===== -->
+    <path d="M 92,105 Q 100,112 108,105" fill="none" stroke="#4A6B8A" stroke-width="2" stroke-linecap="round" class="face-group"/>
+</svg>
+</div>
+
+<script>
+// ===== 状态管理 =====
+const states = {
+    IDLE: 'idle',
+    HAPPY: 'happy',
+    ANGRY: 'angry',
+    SLEEPY: 'sleepy',
+    LOVE: 'love'
+};
+
+let currentState = states.IDLE;
+let blinkTimer = null;
+// ===== 点击互动 =====
+const responses = [
+    "干嘛呀~ 🥰",
+    "再戳我要生气了！(◦`~´◦)",
+    "嘿嘿~ ✨",
+    "别闹啦~",
+    "唔...再摸一下下 >_<"
+];
+
+const eyeReactions = ['happy', 'angry', 'love', 'sleepy'];
+
+function setExpression(expr) {
+    currentState = expr;
+    const faceGroup = document.querySelector('.face-group');
+    if (faceGroup) {
+        faceGroup.style.animation = 'none';
+        void faceGroup.offsetHeight;
+        faceGroup.style.animation = 'appear 0.4s ease-out';
+    }
+}
+
+function onTap() {
+    const msg = responses[Math.floor(Math.random() * responses.length)];
+    const randExpr = eyeReactions[Math.floor(Math.random() * eyeReactions.length)];
+    setExpression(randExpr);
+    // Bubble notification could be added here
+    setTimeout(() => setExpression(states.IDLE), 2000);
+}
+
+// ===== 眨眼调度 =====
+function doBlink() {
+    const group = document.querySelector('.blink-group');
+    if (group) {
+        group.style.animation = 'none';
+        void group.offsetHeight;
+        group.style.animation = 'blink 0.3s ease-in-out';
+    }
+    scheduleBlink();
+}
+
+function scheduleBlink() {
+    const delay = 3000 + Math.random() * 5000;
+    blinkTimer = setTimeout(doBlink, delay);
+}
+
+// ===== 初始化 =====
+document.addEventListener('click', onTap);
+scheduleBlink();
+</script>
+</body>
+</html>
