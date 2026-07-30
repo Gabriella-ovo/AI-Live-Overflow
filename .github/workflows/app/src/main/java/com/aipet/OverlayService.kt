@@ -70,8 +70,8 @@ class OverlayService : Service() {
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
         val density = resources.displayMetrics.density
-        val width = (180 * density).toInt()
-        val height = (240 * density).toInt()
+        val width = (58 * density).toInt()
+        val height = (45 * density).toInt()
 
         params = WindowManager.LayoutParams(
             width,
@@ -114,7 +114,7 @@ class OverlayService : Service() {
                         val dy = event.rawY - initialTouchY
                         val distance = kotlin.math.sqrt((dx * dx + dy * dy).toDouble())
                         if (distance < 20) {
-                            evaluateJavascript("window.petEngine.onTap()")
+                            evaluateJavascript("onTap()")
                         }
                         true
                     }
