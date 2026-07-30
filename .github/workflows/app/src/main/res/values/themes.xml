@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.AILiveOverflow" parent="Theme.AppCompat.DayNight.NoActionBar" />
+    <style name="Theme.AIPet" parent="Theme.AppCompat.DayNight.NoActionBar" />
 </resources>
